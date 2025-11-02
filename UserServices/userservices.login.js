@@ -26,17 +26,21 @@ export default async function login(req, res){
         const user = checkAccount.rows[0];
     }
 
-    //get password stored in the database
-    const db_password = user.password;
-
     //authenticate password
-    const password_authentication = await bcrypt.compare(password, db_password);
+    const password_authentication = await bcrypt.compare(password, user.password);
     if(password_authentication == false){
         return res.json({error:"invalid passsword"});
     }
 
     //generate access token
     const accessToken = jwt.sign({user: user.username}, secretKey)
+    const refreshToken = jwt.sign({user: user.username}, refreshKey,{expiresIn:'7d'});
+
     //send token and message 
-    res.send("logged in successfully")
+    res.json({
+        message: "logged in successfully",
+        accessToken,
+        refreshToken,
+        username: user.username
+    });
 }

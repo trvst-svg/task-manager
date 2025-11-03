@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import secretkey from '../secret.js';
+//import {secretKey} from '../secret.js';
 
 export default function verifyToken(req, res, next){
     const authHeader = req.headers['authorization'];
@@ -9,5 +9,6 @@ export default function verifyToken(req, res, next){
         res.status(201).json({message:"Token unavailable"})
     }
 
-    jwt.verify(token, secretkey)
+    jwt.verify(token, secretKey)
+    next;
 }

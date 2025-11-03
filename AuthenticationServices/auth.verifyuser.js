@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import secretkey from '../UserServices/secret.js';
+import secretkey from '../secret.js';
 
 export default function verifyToken(req, res, next){
     const authHeader = req.headers['authorization'];

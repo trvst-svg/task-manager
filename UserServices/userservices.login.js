@@ -1,8 +1,8 @@
 import pool from "../database/pool.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import secretKey from './secret.js'
-import refreshKey from './secret.js'
+import secretKey from '../secret.js'
+import refreshKey from '../secret.js'
 
 export default async function login(req, res){
     //get login credentials from body

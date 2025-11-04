@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 export default async function login(req, res){
     //get login credentials from body
-    const{username, password} = req.body;
+    const{username, password} = req.body; 
 
     //validate credentials
     if(!username || !password){
@@ -15,7 +15,7 @@ export default async function login(req, res){
 
     //find account in database
     const checkAccount = await pool.query(
-        'SELECT username, password FROM users WHERE username = $1',
+        'SELECT username, password, role FROM users WHERE username = $1',
         [username]
     )
     //check account and store it
@@ -32,6 +32,9 @@ export default async function login(req, res){
         return res.json({error:"invalid passsword"});
     }
 
+    //get role from db to send in payload
+    const role = user.role;
+
     //generate access token
     const accessToken = jwt.sign({user: user.username}, secretKey)
     const refreshToken = jwt.sign({user: user.username}, refreshKey,{expiresIn:'7d'});
@@ -41,6 +44,7 @@ export default async function login(req, res){
         message: "logged in successfully",
         accessToken,
         refreshToken,
-        username: user.username
+        username: user.username,
+        role: role
     });
 }

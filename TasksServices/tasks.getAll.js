@@ -1,6 +1,6 @@
 import pool from "../database/pool.js";
 
-export default async function getTasks(req, res){
+export default async function getAll(req, res){
     const id = req.body.id;
 
     const tasks = pool.query(
@@ -14,5 +14,5 @@ export default async function getTasks(req, res){
         })
     }
 
-    return tasks;
+    return res.send(tasks);
 }

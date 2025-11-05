@@ -1,6 +1,6 @@
 import e from "express";
 import create from '../TasksServices/tasks.create.js'
-import getTasks from '../TasksServices/tasks.getTasks.js'
+import getTasks from '../TasksServices/tasks.getAll.js'
 import auth from '../AuthenticationServices/auth.verifyuser.js';
 
 const router = e.Router();
